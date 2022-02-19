@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "76b5b9d7-df4d-4fc5-b8eb-ab1006c905e5",
+		"name": "opensource-demo.orangehrmlive.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "landingPage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseHTML = cheerio(pm.response.text());\r",
+							"console.log(responseHTML.find('[name=\"_csrf_token\"]').val());\r",
+							"pm.globals.set(\"csrf\", responseHTML.find('[name=\"_csrf_token\"]').val());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://opensource-demo.orangehrmlive.com/",
+					"protocol": "https",
+					"host": [
+						"opensource-demo",
+						"orangehrmlive",
+						"com"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postLogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "actionID",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "hdnUserTimeZoneOffset",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "_csrf_token",
+							"value": "{{csrf}}",
+							"type": "text"
+						},
+						{
+							"key": "txtUsername",
+							"value": "Admin",
+							"type": "text"
+						},
+						{
+							"key": "txtPassword",
+							"value": "admin123",
+							"type": "text"
+						},
+						{
+							"key": "Submit",
+							"value": "LOGIN",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://opensource-demo.orangehrmlive.com/index.php/auth/validateCredentials",
+					"protocol": "https",
+					"host": [
+						"opensource-demo",
+						"orangehrmlive",
+						"com"
+					],
+					"path": [
+						"index.php",
+						"auth",
+						"validateCredentials"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

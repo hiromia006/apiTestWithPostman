@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "3634e521-abc0-4f08-a477-d6762de524f3",
+		"name": "API With Bearer Token",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Bearer Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.unset(\"dcs_access_token\");\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"dcs_access_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-client-id",
+						"value": "Ieg1N5W2qh3hF0qS9Zh2wq6eex2DB935",
+						"type": "text"
+					},
+					{
+						"key": "x-client-secret",
+						"value": "4H2QJ89kYQBStaCuY73h",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://bracapitesting.brac.net/oauth/v2/token?grant_type=client_credentials",
+					"protocol": "https",
+					"host": [
+						"bracapitesting",
+						"brac",
+						"net"
+					],
+					"path": [
+						"oauth",
+						"v2",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials"
+						},
+						{
+							"key": "x-client-secret",
+							"value": "4H2QJ89kYQBStaCuY73h",
+							"disabled": true
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buffer-loan",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{dcs_access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"applicationDate\": \"2021-12-29\",\r\n        \"approvedDurationInMonths\": 12,\r\n        \"approvedLoanAmount\": 50000.0,\r\n        \"branchCode\": \"0547\",\r\n        \"coBorrowerDto\": {\r\n            \"idCard\": {\r\n                \"backImageUrl\": \"https://dummyimage.com/200x200&text=Augue\",\r\n                \"cardTypeId\": 2,\r\n                \"expiryDate\": null,\r\n                \"frontImageUrl\": \"https://dummyimage.com/200x200&text=Erat\",\r\n                \"idCardNo\": \"19711072602305121\",\r\n                \"issueDate\": null,\r\n                \"issuePlace\": null\r\n            },\r\n            \"name\": \"Inciderint Movet\",\r\n            \"NoRelationshipId\": 21,\r\n            \"relationshipId\": 21\r\n        },\r\n        \"consentUrl\": null,\r\n        \"disbursementDate\": null,\r\n        \"frequencyId\": 3,\r\n        \"id\": \"5d92f4c5-29d0-44f4-9a55-d1cc963bed8c\",\r\n        \"insuranceProductId\": 5,\r\n        \"loanAccountId\": null,\r\n        \"loanApprover\": 3,\r\n        \"loanProductId\": 31,\r\n        \"loanProposalStatusId\": 0,\r\n        \"memberId\": 46105923,\r\n        \"memberTypeId\": 1,\r\n        \"microInsurance\": true,\r\n        \"modeOfPaymentId\": 0,\r\n        \"nominees\": null,\r\n        \"policyTypeId\": 1,\r\n        \"premiumAmount\": 150.0,\r\n        \"projectCode\": \"60\",\r\n        \"proposalDurationInMonths\": 12,\r\n        \"proposedLoanAmount\": 50000.0,\r\n        \"rejectionReason\": \"Contentiones Maximus Cubilia dis Inani Fames Evertitur Habemus Possit Molestie\",\r\n        \"schemeId\": 4,\r\n        \"secondInsurer\": null,\r\n        \"sectorId\": 42,\r\n        \"signConsent\": true,\r\n        \"subSectorId\": 16,\r\n        \"updated\": true,\r\n        \"voCode\": null,\r\n        \"voId\": null\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://bracapitesting.brac.net/v1/buffer-loan-proposals",
+					"protocol": "https",
+					"host": [
+						"bracapitesting",
+						"brac",
+						"net"
+					],
+					"path": [
+						"v1",
+						"buffer-loan-proposals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buffer-members",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{dcs_access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"applicationDate\": \"2021-12-29\",\r\n    \"assignedPoPin\": null,\r\n    \"bankAccountNumber\": \"10000000\",\r\n    \"bankBranchId\": 222,\r\n    \"bankId\": 1,\r\n    \"bkashWalletNo\": \"01700680350\",\r\n    \"branchCode\": \"0547\",\r\n    \"contactNo\": \"01741811233\",\r\n    \"dateOfBirth\": \"1991-12-29\",\r\n    \"educationId\": 6,\r\n    \"fatherNameEn\": \"A Quis\",\r\n    \"flag\": 1,\r\n    \"genderId\": 3,\r\n    \"guarantor\": [\r\n      {\r\n        \"dateOfBirth\": \"1981-12-29\",\r\n        \"idCard\": {\r\n          \"backImageUrl\": \"https://dummyimage.com/200x200&text=Percipit\",\r\n          \"cardTypeId\": 2,\r\n          \"expiryDate\": null,\r\n          \"frontImageUrl\": \"https://dummyimage.com/200x200&text=Cetero\",\r\n          \"idCardNo\": \"19711072564997361\",\r\n          \"issueDate\": null,\r\n          \"issuePlace\": null\r\n        },\r\n        \"nameEn\": \"Facilisis Nulla\",\r\n        \"relationshipId\": 14\r\n      }\r\n    ],\r\n    \"id\": \"945062a1-cbea-410c-b26b-9e06606fcb9a\",\r\n    \"idCard\": {\r\n      \"backImageUrl\": \"https://dummyimage.com/200x200&text=Explicari\",\r\n      \"cardTypeId\": 2,\r\n      \"expiryDate\": null,\r\n      \"frontImageUrl\": \"https://dummyimage.com/200x200&text=Tristique\",\r\n      \"idCardNo\": \"19711072432881542\",\r\n      \"issueDate\": null,\r\n      \"issuePlace\": null\r\n    },\r\n    \"maritalStatusId\": 5,\r\n    \"memberId\": null,\r\n    \"memberImageUrl\": \"https://dummyimage.com/200x200&text=Inciderint\",\r\n    \"memberTypeId\": 1,\r\n    \"motherNameEn\": \"Conclusionemque ei\",\r\n    \"nameEn\": \"Has Expetendis\",\r\n    \"nominees\": [\r\n      {\r\n        \"id\": null,\r\n        \"contactNo\": \"01736338763\",\r\n        \"dateOfBirth\": \"1981-12-29\",\r\n        \"idCard\": {\r\n          \"backImageUrl\": \"https://dummyimage.com/200x200&text=Alterum\",\r\n          \"cardTypeId\": 2,\r\n          \"expiryDate\": null,\r\n          \"frontImageUrl\": \"https://dummyimage.com/200x200&text=Tantas\",\r\n          \"idCardNo\": \"19711072778050434\",\r\n          \"issueDate\": null,\r\n          \"issuePlace\": null\r\n        },\r\n        \"name\": \"Posuere Interpretaris\",\r\n        \"relationshipId\": 4\r\n      }\r\n    ],\r\n    \"occupationId\": 6,\r\n    \"isPassbookRequired\": true,\r\n    \"passbookNumber\": \"19711072659080579\",\r\n    \"permanentAddress\": \"No Bibendum leo Epicuri\",\r\n    \"permanentDistrictId\": 14,\r\n    \"permanentUpazilaId\": 161,\r\n    \"poId\": 3,\r\n    \"presentAddress\": \"Suspendisse Inani Hendrerit Magna\",\r\n    \"presentDistrictId\": 14,\r\n    \"presentUpazilaId\": 150,\r\n    \"projectCode\": \"15\",\r\n    \"rejectionReason\": \"Sumo Aenean\",\r\n    \"routingNumber\": 1234,\r\n    \"savingsProductId\": 11,\r\n    \"spouseDateOfBirth\": null,\r\n    \"spouseIdCard\": null,\r\n    \"spouseNameEn\": null,\r\n    \"statusId\": 1,\r\n    \"targetAmount\": 93334.0,\r\n    \"tinNumber\": \"197578860113\",\r\n    \"updated\": true,\r\n    \"voCode\": \"5412\",\r\n    \"voId\": 771242\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/v1/buffer-members",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"buffer-members"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
