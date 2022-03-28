@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "21305d8b-3d9d-47da-8e5c-cec8812eae9a",
+		"name": "ESB bKash Soap",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "check-information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"\r",
+							"var accountId = jsonObject['soapenv:Envelope']['soapenv:Body']['ns3:checkInformationResponse']['ns3:Body']['ns3:AccountID'];\r",
+							"pm.collectionVariables.set(\"accountId\", accountId);\r",
+							"\r",
+							"var result = jsonObject['soapenv:Envelope']['soapenv:Body']['ns3:checkInformationResponse']['ns3:Body']['ns3:ResultDesc'];\r",
+							"pm.collectionVariables.set(\"result\", result);\r",
+							"\r",
+							"var paymentId = jsonObject['soapenv:Envelope']['soapenv:Body']['ns3:checkInformationResponse']['ns3:Body']['ns3:PaymentInfo']['ns3:PaymentData'][0]['ns3:paymentID'];\r",
+							"\r",
+							"pm.collectionVariables.set(\"paymentId\", paymentId);\r",
+							"//console.log(accountId)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"uuid\", \"01767344758\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:brac=\"http://brac.net/brac-erp\" xmlns:head=\"http://brac.net/brac-erp/header\" xmlns:chec=\"http://brac.net/brac-erp/check-information-request-body\">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <brac:checkInformationRequest>\n         <brac:Header>\n           <head:Version>1</head:Version>\n            <head:CommandID>passbook</head:CommandID>\n            <head:OriginatorConversationID>11209385123583354</head:OriginatorConversationID>\n            <head:Timestamp>2017-12-06T17:39:00Z</head:Timestamp>\n            <head:PartnerID>BRACMFI</head:PartnerID>\n            <head:ParentID>1111111111</head:ParentID>\n            <head:ChannelCode>10</head:ChannelCode>\n         </brac:Header>\n         <brac:Body>\n            <chec:InitiatorID>1</chec:InitiatorID>\n            <chec:RequesterMSISDN>1</chec:RequesterMSISDN>\n            <chec:InquiryType>1</chec:InquiryType>\n            <chec:AccountID>{{uuid}}</chec:AccountID>\n            <chec:SubID>?</chec:SubID>\n            <chec:StartMonth>?</chec:StartMonth>\n            <chec:EndMonth>?</chec:EndMonth>\n            <chec:ContactNo>?</chec:ContactNo>\n            <chec:ChkAmount>?</chec:ChkAmount>\n         </brac:Body>\n      </brac:checkInformationRequest>\n   </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/check-information",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"check-information"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bill-validation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:brac=\"http://brac.net/brac-erp\" xmlns:head=\"http://brac.net/brac-erp/header\" xmlns:bill=\"http://brac.net/brac-erp/bill-validation-request-body\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <brac:billValidationRequest>\n            <brac:Header>\n                <head:Version>1</head:Version>\n                <head:CommandID>passbook</head:CommandID>\n                <head:OriginatorConversationID>11209385123583354</head:OriginatorConversationID>\n                <head:Timestamp>2017-12-06T17:39:00Z</head:Timestamp>\n                <head:PartnerID>BRACMFI</head:PartnerID>\n                <head:ParentID>34255</head:ParentID>\n                <head:ChannelCode>10</head:ChannelCode>\n            </brac:Header>\n            <brac:Body>\n                <bill:InitiatorID>01322875315</bill:InitiatorID>\n                <bill:RequesterMSISDN>01767344758</bill:RequesterMSISDN>\n                <bill:PayMode>0</bill:PayMode>\n                <bill:PayType>2</bill:PayType>\n                <bill:bKashTrxRef>1895677326</bill:bKashTrxRef>\n                <bill:AccountID>{{accountId}}</bill:AccountID>\n                <bill:SubID></bill:SubID>\n                <bill:PaymentID>{{paymentId}}</bill:PaymentID>\n                <bill:PaymentContractNo></bill:PaymentContractNo>\n                <bill:ContactNo></bill:ContactNo>\n                <bill:StartMonth></bill:StartMonth>\n                <bill:EndMonth></bill:EndMonth>\n                <bill:ActualAmount>500</bill:ActualAmount>\n                <bill:PayAmount>500</bill:PayAmount>\n                <bill:PartialAmountFlag>0</bill:PartialAmountFlag>\n            </brac:Body>\n        </brac:billValidationRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/bill-validation",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"bill-validation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bill-payment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:brac=\"http://brac.net/brac-erp\" xmlns:head=\"http://brac.net/brac-erp/header\" xmlns:bill=\"http://brac.net/brac-erp/bill-payment-request-body\">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <brac:billPaymentRequest>\n         <brac:Header>\n            <head:Version>1</head:Version>\n            <head:CommandID>billPayment</head:CommandID>\n            <head:OriginatorConversationID>11209385123583354</head:OriginatorConversationID>\n            <head:Timestamp>2017-12-06T17:39:00Z</head:Timestamp>\n            <head:PartnerID>BRACMFI</head:PartnerID>\n            <head:ParentID>?</head:ParentID>\n            <head:ChannelCode>10</head:ChannelCode>\n         </brac:Header>\n         <brac:Body>\n            <bill:bKashCompletionTime>2017-12-06T17:39:00Z</bill:bKashCompletionTime>\n            <bill:bKashTrxRef>1895677326</bill:bKashTrxRef>\n            <bill:PartnerIntentRef>8</bill:PartnerIntentRef>\n            <bill:ActualTRXTime>2017-12-06T17:39:00Z</bill:ActualTRXTime>\n         </brac:Body>\n      </brac:billPaymentRequest>\n   </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/bill-payment",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"bill-payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "passbook",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:brac=\"http://brac.net/brac-erp\" xmlns:head=\"http://brac.net/brac-erp/header\" xmlns:pas=\"http://brac.net/brac-erp/passbook-request-body\">\n   <soapenv:Header/>\n   <soapenv:Body>\n      <brac:passbookRequest>\n         <brac:Header>\n            <head:Version>1</head:Version>\n            <head:CommandID>passbook</head:CommandID>\n            <head:OriginatorConversationID>11209385123583354</head:OriginatorConversationID>\n            <head:Timestamp>2017-12-06T17:39:00Z</head:Timestamp>\n            <head:PartnerID>BRACMFI</head:PartnerID>\n            <head:ParentID>?</head:ParentID>\n            <head:ChannelCode>10</head:ChannelCode>\n         </brac:Header>\n         <brac:Body>\n            <pas:InitiatorID>01322875315</pas:InitiatorID>\n            <pas:AccountID>01767344758</pas:AccountID>\n            <pas:SubID>?</pas:SubID>\n            <pas:StartMonth>022021</pas:StartMonth>\n            <pas:EndMonth>042021</pas:EndMonth>\n            <pas:MaxTXN>?</pas:MaxTXN>\n         </brac:Body>\n      </brac:passbookRequest>\n   </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/passbook",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"passbook"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8082"
+		},
+		{
+			"key": "uuid",
+			"value": ""
+		},
+		{
+			"key": "accountId",
+			"value": ""
+		},
+		{
+			"key": "result",
+			"value": ""
+		},
+		{
+			"key": "productId",
+			"value": ""
+		},
+		{
+			"key": "paymentId",
+			"value": ""
+		}
+	]
+}
