@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "bd34e118-da98-4d1a-b6e7-9ddfa7224037",
+		"name": "ebsBkashUid",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "581916"
+	},
+	"item": [
+		{
+			"name": "check-information",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.unset(\"accountId2\");\r",
+							"pm.globals.set(\"accountId2\", \"1807369253\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"\r",
+							"\r",
+							"var responseDesc = jsonObject['soap:Envelope']['soap:Body']['tem:ApplyTransactionResponse']['at:ResponseDesc'];\r",
+							"console.log(\"responseDesc \" +responseDesc);\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(responseDesc).to.contains('Success');\r",
+							"});\r",
+							"\r",
+							"var commonPath=jsonObject['soap:Envelope']['soap:Body']['tem:ApplyTransactionResponse']['at:Parameters']['goa:Parameter'];\r",
+							"\r",
+							"var arrayLength = commonPath.length;\r",
+							"console.log(\"arrayLength \" +arrayLength);\r",
+							"\r",
+							"if (arrayLength==24){\r",
+							"    checkInformation24();\r",
+							"\r",
+							"}else if (arrayLength > 24 && arrayLength<=37){\r",
+							"checkInformation24();\r",
+							"checkInformation37();\r",
+							"}else if (arrayLength > 37){\r",
+							"checkInformation24();\r",
+							"checkInformation37();\r",
+							"checkInformation50();\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"function checkInformation24(){\r",
+							"    var contactNo = commonPath[10]['goa:Value'];\r",
+							"console.log(\"contactNo \" +contactNo);\r",
+							"pm.globals.set(\"contactNo\", contactNo)\r",
+							"\r",
+							"\r",
+							"var accountId2 = commonPath[7]['goa:Value'];\r",
+							"console.log(\"accountId2 \" +accountId2);\r",
+							"pm.globals.set(\"accountId\", accountId2)\r",
+							"\r",
+							"\r",
+							"var productId1 = commonPath[12]['goa:Value'];\r",
+							"console.log(\"productId1 \" +productId1);\r",
+							"pm.globals.set(\"productId1\", productId1);\r",
+							"\r",
+							"var productName1 = commonPath[14]['goa:Value'];\r",
+							"console.log(\"ProductName1 \" +productName1);\r",
+							"\r",
+							"var penaltyAmount1 = commonPath[16]['goa:Value'];\r",
+							"console.log(\"PenaltyAmount1 \" +penaltyAmount1);\r",
+							"\r",
+							"var paymentDetails1 = commonPath[18]['goa:Value'];\r",
+							"console.log(\"PaymentDetails1 \" +paymentDetails1);\r",
+							"\r",
+							"var minAmount1 = commonPath[19]['goa:Value'];\r",
+							"console.log(\"MinAmount1 \" +minAmount1);\r",
+							"\r",
+							"\r",
+							"var rcvblAmount1 = commonPath[20]['goa:Value'];\r",
+							"if(rcvblAmount1=='0.0'){\r",
+							"console.log(\"rcvblAmount1 Default value : \" +\"3000\");\r",
+							"pm.globals.set(\"rcvblAmount1\", 3000);\r",
+							"}else{\r",
+							"console.log(\"rcvblAmount1 \" +rcvblAmount1);\r",
+							"pm.globals.set(\"rcvblAmount1\", rcvblAmount1);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"var outstandingAmount1 = commonPath[21]['goa:Value'];\r",
+							"console.log(\"outstandingAmount1 \" +outstandingAmount1);\r",
+							"// pm.globals.set(\"outstandingAmount1\", outstandingAmount1);\r",
+							"\r",
+							"\r",
+							"var actualAmount1 = commonPath[22]['goa:Value'];\r",
+							"console.log(\"ActualAmount1 \" +actualAmount1);\r",
+							"\r",
+							"var partnerNtfcn1 = commonPath[23]['goa:Value'];\r",
+							"console.log(\"partnerNtfcn1 \" +partnerNtfcn1);\r",
+							"// pm.globals.set(\"PartnerNtfcn1\", partnerNtfcn1);\r",
+							"\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function checkInformation37(){\r",
+							"console.log(\" ======================================== Second ===================================================\")\r",
+							"\r",
+							"var productId2 = commonPath[25]['goa:Value'];\r",
+							"console.log(\"productId2: \" +productId2);\r",
+							"pm.globals.set(\"productId2\", productId2);\r",
+							"\r",
+							"var productName2 = commonPath[27]['goa:Value'];\r",
+							"console.log(\"ProductName2 \" +productName2);\r",
+							"\r",
+							"var penaltyAmount2 = commonPath[29]['goa:Value'];\r",
+							"console.log(\"PenaltyAmount2 \" +penaltyAmount2);\r",
+							"\r",
+							"var paymentDetails21 = commonPath[31]['goa:Value'];\r",
+							"console.log(\"PaymentDetails21 \" +paymentDetails21);\r",
+							"\r",
+							"var minAmount2 = commonPath[32]['goa:Value'];\r",
+							"console.log(\"MinAmount1 \" +minAmount2);\r",
+							"\r",
+							"var rcvblAmount2 = commonPath[33]['goa:Value'];\r",
+							"console.log(\"rcvblAmount2: \" +rcvblAmount2);\r",
+							"\r",
+							"var outstandingAmount2 = commonPath[34]['goa:Value'];\r",
+							"console.log(\"outstandingAmount2 \" +outstandingAmount2);\r",
+							"\r",
+							"\r",
+							"var actualAmount2 = commonPath[35]['goa:Value'];\r",
+							"console.log(\"ActualAmount2 \" +actualAmount2);\r",
+							"\r",
+							"var partnerNtfcn2 = commonPath[36]['goa:Value'];\r",
+							"console.log(\"partnerNtfcn1 \" +partnerNtfcn2);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function checkInformation50(){\r",
+							"console.log(\" ======================================== Third ===================================================\")\r",
+							"\r",
+							"var productId3 = commonPath[25]['goa:Value'];\r",
+							"console.log(\"productId3: \" +productId3);\r",
+							"pm.globals.set(\"productId3\", productId3);\r",
+							"\r",
+							"var productName3 = commonPath[40]['goa:Value'];\r",
+							"console.log(\"productName3 \" +productName3);\r",
+							"\r",
+							"var penaltyAmount3 = commonPath[42]['goa:Value'];\r",
+							"console.log(\"PenaltyAmount3 \" +penaltyAmount3);\r",
+							"\r",
+							"var paymentDetails21 = commonPath[44]['goa:Value'];\r",
+							"console.log(\"PaymentDetails21 \" +paymentDetails21);\r",
+							"\r",
+							"var minAmount3 = commonPath[45]['goa:Value'];\r",
+							"console.log(\"MinAmount3 \" +minAmount3);\r",
+							"\r",
+							"var rcvblAmount3 = commonPath[46]['goa:Value'];\r",
+							"console.log(\"rcvblAmount3: \" +rcvblAmount3);\r",
+							"\r",
+							"var outstandingAmount3 = commonPath[47]['goa:Value'];\r",
+							"console.log(\"outstandingAmount3 \" +outstandingAmount3);\r",
+							"\r",
+							"var actualAmount3 = commonPath[48]['goa:Value'];\r",
+							"console.log(\"ActualAmount3 \" +actualAmount3);\r",
+							"\r",
+							"var partnerNtfcn3 = commonPath[49]['goa:Value'];\r",
+							"console.log(\"partnerNtfcn3 \" +partnerNtfcn3);\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true,
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\">\n    <soapenv:Body>\n        <tem:ApplyTransactionRequest xmlns:tem=\"http://tempuri.org/\"\nxmlns:at=\"http://cps.huawei.com/cpsinterface/goa/at\"\nxmlns:goa=\"http://cps.huawei.com/cpsinterface/goa\">\n            <at:Header>\n                <goa:CommandID>CheckInformation</goa:CommandID>\n                <goa:Version>1.0</goa:Version>\n                <goa:LoginID>MFIAPI</goa:LoginID>\n                <goa:Password>g3/dcHgsHHTlAGzRs7iw2R6743yRDeLDcKWpVoS89FZtrW6eSt2Ss\ngqr4vwYfSne</goa:Password>\n                <goa:Timestamp>20220110111810</goa:Timestamp>\n                <goa:ConversationID>9AA304WCY1</goa:ConversationID>\n                <goa:HeaderExtension>\n                    <goa:Parameter>\n                        <goa:Key>name</goa:Key>\n                        <goa:Value>cps</goa:Value>\n                    </goa:Parameter>\n                </goa:HeaderExtension>\n            </at:Header>\n            <at:Body>\n                <at:Parameters>\n                    <goa:Parameter>\n                        <goa:Key>IDNumber</goa:Key>\n                        <goa:Value/>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>FullName</goa:Key>\n                        <goa:Value>SEWEETY KHANOM</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>InquiryType</goa:Key>\n                        <goa:Value>01</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>InquiryMode</goa:Key>\n                        <goa:Value>02</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>FirstName</goa:Key>\n                        <goa:Value>Tanveer</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>InitiatorID</goa:Key>\n                        <goa:Value>8801301712997</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>ChannelCode</goa:Key>\n                        <goa:Value>10</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>LastName</goa:Key>\n                        <goa:Value>Ghosh</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>PartnerID</goa:Key>\n                        <goa:Value>MFI</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>ChkAmount</goa:Key>\n                        <goa:Value>111</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>EndMonth</goa:Key>\n                        <goa:Value>20120101</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>ExtendedParmeter1</goa:Key>\n                        <goa:Value>Test1</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>SubID</goa:Key>\n                        <goa:Value>11111</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>AccountID</goa:Key>\n                        <goa:Value>{{accountId2}}</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>StartMonth</goa:Key>\n                        <goa:Value>20120101</goa:Value>\n                    </goa:Parameter>\n                </at:Parameters>\n            </at:Body>\n        </tem:ApplyTransactionRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/v1/mfs/check-information",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"mfs",
+						"check-information"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bill-validation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"let bKashTrxRefLoan=generateKbashTransactionNumber();\r",
+							"pm.globals.set(\"bKashTrxRef\", bKashTrxRefLoan);\r",
+							"console.log(\"bKashTrxRef =: \"+ bKashTrxRefLoan);\r",
+							"\r",
+							"function generateKbashTransactionNumber() {\r",
+							"    var result = '';\r",
+							"    var characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+							"    var charactersLength = characters.length;\r",
+							"    for (var i = 0; i < 10; i++) {\r",
+							"        result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+							"    }\r",
+							"    return result;\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"\r",
+							"\r",
+							"var responseDesc = jsonObject['soap:Envelope']['soap:Body']['tem:ApplyTransactionResponse']['at:ResponseDesc'];\r",
+							"console.log(\"responseDesc \" +responseDesc);\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(responseDesc).to.contains('Success');\r",
+							"});\r",
+							"\r",
+							"var partnerIntentRef = jsonObject['soap:Envelope']['soap:Body']['tem:ApplyTransactionResponse']['at:Parameters']['goa:Parameter'][2]['goa:Value'];\r",
+							"console.log(\"partnerIntentRef \" +partnerIntentRef);\r",
+							"pm.globals.set(\"partnerIntentRef\", partnerIntentRef)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\">\n    <soapenv:Body>\n        <tem:ApplyTransactionRequest xmlns:tem=\"http://tempuri.org/\"\nxmlns:at=\"http://cps.huawei.com/cpsinterface/goa/at\"\nxmlns:goa=\"http://cps.huawei.com/cpsinterface/goa\">\n            <at:Header>\n                <goa:CommandID>ValidationPayment</goa:CommandID>\n                <goa:Version>1.0</goa:Version>\n                <goa:LoginID>MFIAPI</goa:LoginID>\n                <goa:Password>znqlx+4Bu9b8LFlSKgNdPXvtPTusgsNF3faE2ENV6Hom6mHcophAY\nFoXQEUNqWAu</goa:Password>\n                <goa:Timestamp>20220110112054</goa:Timestamp>\n                <goa:ConversationID>9AA604WCY4</goa:ConversationID>\n                <goa:HeaderExtension>\n                    <goa:Parameter>\n                        <goa:Key>name</goa:Key>\n                        <goa:Value>cps</goa:Value>\n                    </goa:Parameter>\n                </goa:HeaderExtension>\n            </at:Header>\n            <at:Body>\n                <at:Parameters>\n                    <goa:Parameter>\n                        <goa:Key>ChannelCode</goa:Key>\n                        <goa:Value>10</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>LastName</goa:Key>\n                        <goa:Value>Ghosh</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>IDNumber</goa:Key>\n                        <goa:Value/>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>FullName</goa:Key>\n                        <goa:Value>SEWEETY KHANOM</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>PartnerID</goa:Key>\n                        <goa:Value>MFI</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>FirstName</goa:Key>\n                        <goa:Value>Tanveer</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>InitiatorID</goa:Key>\n                        <goa:Value>14298</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>PartialAmountFlag</goa:Key>\n                        <goa:Value>1</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>PayAmount</goa:Key>\n                        <goa:Value>{{rcvblAmount1}}</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>ExtendedParmeter1</goa:Key>\n                        <goa:Value>ExtendedParmeter1</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>EndMonth</goa:Key>\n                        <goa:Value>20220101</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>StartMonth</goa:Key>\n                        <goa:Value>20220101</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>ActualAmount</goa:Key>\n                        <goa:Value>101</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>ContactNo</goa:Key>\n                        <goa:Value>01911613242</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>SubID</goa:Key>\n                        <goa:Value>11111</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>AccountID</goa:Key>\n                        <goa:Value>346536845631</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>PaymentContractNo</goa:Key>\n                        <goa:Value>01911613242</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>PaymentID</goa:Key>\n                        <goa:Value>{{productId1}}</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>PayMode</goa:Key>\n                        <goa:Value>02</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>bKashTrxRef</goa:Key>\n                        <goa:Value>{{bKashTrxRef}}</goa:Value>\n                    </goa:Parameter>\n                    <goa:Parameter>\n                        <goa:Key>PayType</goa:Key>\n                        <goa:Value>01</goa:Value>\n                    </goa:Parameter>\n                </at:Parameters>\n            </at:Body>\n        </tem:ApplyTransactionRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/v1/mfs/bill-validation",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"mfs",
+						"bill-validation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bill-payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"\r",
+							"\r",
+							"var responseDesc = jsonObject['soap:Envelope']['soap:Body']['tem:ApplyTransactionResponse']['at:ResponseDesc'];\r",
+							"console.log(\"responseDesc \" +responseDesc);\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(responseDesc).to.contains('Success');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require('moment');\r",
+							"bKashCompletionTime=moment().format(\"YYYYMMDDHHMMSS\")\r",
+							"console.log(\"bKashCompletionTime \"+ bKashCompletionTime);\r",
+							"\r",
+							"\r",
+							"pm.globals.unset(\"bKashCompletionTime\");\r",
+							"pm.globals.set(\"bKashCompletionTime\", bKashCompletionTime);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\">\n   <soapenv:Body>\n      <tem:ApplyTransactionRequest xmlns:tem=\"http://tempuri.org/\" xmlns:at=\"http://cps.huawei.com/cpsinterface/goa/at\" xmlns:goa=\"http://cps.huawei.com/cpsinterface/goa\">\n         <at:Header>\n            <goa:CommandID>PaymentConfirmation</goa:CommandID>\n            <goa:Version>1.0</goa:Version>\n            <goa:LoginID>MFIAPI</goa:LoginID>\n            <goa:Password>Y/xzJEBKRqUJZt85/Rm1K8AzBZCpivMxp1mW0VwF56+mwgFEbR\nY/7OjcAOT6duXo</goa:Password>\n            <goa:Timestamp>20220110112055</goa:Timestamp>\n            <goa:ConversationID>9AA604WCY4</goa:ConversationID>\n            <goa:HeaderExtension>\n               <goa:Parameter>\n                  <goa:Key>name</goa:Key>\n                  <goa:Value>cps</goa:Value>\n               </goa:Parameter>\n            </goa:HeaderExtension>\n         </at:Header>\n         <at:Body>\n            <at:Parameters>\n               <goa:Parameter>\n                  <goa:Key>PartnerIntentRef</goa:Key>\n                  <goa:Value>{{partnerIntentRef}}</goa:Value>\n               </goa:Parameter>\n               <goa:Parameter>\n                  <goa:Key>bKashTrxRef</goa:Key>\n                  <goa:Value>{{bKashTrxRef}}</goa:Value>\n               </goa:Parameter>\n               <goa:Parameter>\n                  <goa:Key>bKashCompletionTime</goa:Key>\n                  <goa:Value>{{bKashCompletionTime}}</goa:Value>\n               </goa:Parameter>\n               <goa:Parameter>\n                  <goa:Key>ActualTRXTime</goa:Key>\n                  <goa:Value>20220110112055</goa:Value>\n               </goa:Parameter>\n               <goa:Parameter>\n                  <goa:Key>PartnerID</goa:Key>\n                  <goa:Value>MFI</goa:Value>\n               </goa:Parameter>\n            </at:Parameters>\n         </at:Body>\n      </tem:ApplyTransactionRequest>\n   </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/v1/mfs/bill-payment",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"mfs",
+						"bill-payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "passbook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"// console.log(\"If condition = : \" + admissionStatus);\r",
+							"pm.globals.set(\"resultDesc\", jsonData.resultDesc);\r",
+							"console.log(\"resultDesc \" +jsonData.resultDesc);\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(resultDesc).to.contains('Success');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(jsonData.resultDesc).to.contains('Success');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(jsonData.initiatorID).to.contains('{{contactNo}}');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(jsonData.accountID).to.contains('{{accountId}}');\r",
+							"});\r",
+							"\r",
+							"console.log(\"accountID \" +jsonData.accountID);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"Version\":7,\n\"CommandID\":\"Passbook\",\n\"OriginatorConversationID\":\"1\",\n\"Timestamp\":\"2022-03-01T17:16:40\",\n\"PartnerID\":\"mfi\",\n\"ParentID\":\"shakti\",\n\"InitiatorID\":\"{{contactNo}}\",\n\"AccountID\":\"{{accountId2}}\",\n\"StartMonth\":\"012022\",\n\"EndMonth\":\"102022\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/v1/mfs/passbook",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"mfs",
+						"passbook"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8082"
+		}
+	]
+}
